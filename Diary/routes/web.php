@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'DiaryController@index')->name('diary.index'); //追加
+Route::get('/', 'DiaryController@index')->name('diary.index');
 
 // Route::get('/', function () {
 //     return view('welcome');

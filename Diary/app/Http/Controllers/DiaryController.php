@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Diary;
 use Illuminate\Http\Request;
 
 class DiaryController extends Controller
 {
-    //
     public function index()
     {
-    return 'Good morning World';
+        $diaries = Diary::all(); 
+
+        // dd($diaries);
+
+        return view('diaries.index',['diaries' => $diaries]);
     }
 }
