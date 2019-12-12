@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Diary;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateDiary;
 
 class DiaryController extends Controller
 {
     public function index()
     {
-        $diaries = Diary::all(); 
+        $diaries = Diary::orderBy('id', 'desc')->get(); 
 
         // dd($diaries);
         return view('diaries.index',['diaries' => $diaries]);
@@ -21,7 +22,7 @@ class DiaryController extends Controller
         return view('diaries.create');
     }
 
-    public function store(Request $request)
+    public function store(CreateDiary $request)
     {
         $diary = new Diary();
         // dd('ここに保存処理');
@@ -32,6 +33,16 @@ class DiaryController extends Controller
 
         return redirect()->route('diary.index');
     }
+
+    public function destroy(int $id)
+    {
+        //Diaryモデルを使用して、diariesテーブルから$idと一致するidをもつデータを取得
+        $diary = Diary::find($id); 
+        //取得したデータを削除
+        $diary->delete();
+        return redirect()->route('diary.index');
+    }
+
 
 
 }
