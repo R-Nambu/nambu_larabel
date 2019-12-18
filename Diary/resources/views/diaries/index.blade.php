@@ -21,7 +21,12 @@
                 @method('delete')
                 <button class="btn btn-danger">削除</button>
             </form>
-        @endif 
+        @endif
+        <div class=" mt-3 ml-3">
+            <i class="far fa-heart fa-lg text-danger js-like"></i>
+            <input class="diary-id" type="hidden" value="{{ $diary->id }}">
+            <span class="js-like-num">200</span>
+        </div>
     </div>
  @endforeach
 
