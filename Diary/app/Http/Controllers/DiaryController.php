@@ -11,7 +11,8 @@ class DiaryController extends Controller
 {
     public function index()
     {
-        $diaries = Diary::orderBy('id', 'desc')->get(); 
+        // $diaries = Diary::orderBy('id', 'desc')->get(); 
+        $diaries = Diary::with('likes')->orderBy('id', 'desc')->get(); 
 
         // dd($diaries);
         return view('diaries.index',['diaries' => $diaries]);
@@ -77,6 +78,25 @@ class DiaryController extends Controller
         $diary->body = $request->body; //画面で入力された本文を代入
         $diary->save(); //DBに保存
         return redirect()->route('diary.index'); //一覧ページにリダイレクト
+    }
+
+    public function like(int $id)
+    {
+        $diary = Diary::where('id', $id)->with('likes')->first();
+        $diary->likes()->attach(Auth::user()->id);
+
+        return response()
+        ->json(['success' => 'いいね完了！']);
+
+    }
+
+    public function dislike(int $id)
+    {
+        $diary = Diary::where('id', $id)->with('likes')->first();
+        $diary->likes()->detach(Auth::user()->id);
+        // 通信が成功したことを返す
+        return response()
+            ->json(['success' => 'いいね完了！']);
     }
 
 
